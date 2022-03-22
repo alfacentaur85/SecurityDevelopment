@@ -12,6 +12,5 @@ namespace SecurityDevelopment.Abstractions
         Task AddAsync(IReadOnlyList<R> item);
         Task UpdateAsync(IReadOnlyList<R> item);
         Task DeleteAsync(int id);
-
     }
 }

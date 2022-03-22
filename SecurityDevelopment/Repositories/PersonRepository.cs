@@ -184,7 +184,5 @@ namespace SecurityDevelopment.Repositories
             var JSONresult = JsonConvert.SerializeObject(table);
             return new JsonResult(JSONresult);
         }
-
-
     }
 }
