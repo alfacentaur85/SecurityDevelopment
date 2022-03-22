@@ -8,12 +8,21 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SecurityDevelopment", "Secu
 =======
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SecurityDevelopment", "SecurityDevelopment\SecurityDevelopment.csproj", "{489D391F-6A15-4F2C-9EF2-FCB938D840E5}"
 EndProject
+<<<<<<< HEAD
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Migrations", "Migrations\Migrations.csproj", "{7D49F0F8-3B76-4F2D-852E-0308FB9E7862}"
+=======
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Migrations", "Migrations\Migrations.csproj", "{7D49F0F8-3B76-4F2D-852E-0308FB9E7862}"
+>>>>>>> main
 	ProjectSection(ProjectDependencies) = postProject
 		{489D391F-6A15-4F2C-9EF2-FCB938D840E5} = {489D391F-6A15-4F2C-9EF2-FCB938D840E5}
 	EndProjectSection
 >>>>>>> lesson2
 EndProject
+<<<<<<< HEAD
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SecurityDevelopmentAddUsers", "SecurityDevelopmentAddUsers\SecurityDevelopmentAddUsers.csproj", "{C71C24A8-1170-4D85-A547-076C803A2E21}"
+EndProject
+=======
+>>>>>>> main
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -30,7 +39,17 @@ Global
 		{7D49F0F8-3B76-4F2D-852E-0308FB9E7862}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7D49F0F8-3B76-4F2D-852E-0308FB9E7862}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7D49F0F8-3B76-4F2D-852E-0308FB9E7862}.Release|Any CPU.Build.0 = Release|Any CPU
+<<<<<<< HEAD
 >>>>>>> lesson2
+=======
+<<<<<<< HEAD
+		{C71C24A8-1170-4D85-A547-076C803A2E21}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C71C24A8-1170-4D85-A547-076C803A2E21}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C71C24A8-1170-4D85-A547-076C803A2E21}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C71C24A8-1170-4D85-A547-076C803A2E21}.Release|Any CPU.Build.0 = Release|Any CPU
+=======
+>>>>>>> main
+>>>>>>> lesson3
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

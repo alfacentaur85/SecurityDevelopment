@@ -2,9 +2,12 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+<<<<<<< HEAD
+=======
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using SecurityDevelopment;
+>>>>>>> main
 
 namespace SecurityDevelopment.Migrations
 {

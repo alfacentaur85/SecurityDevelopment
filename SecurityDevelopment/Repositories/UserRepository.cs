@@ -9,6 +9,15 @@ using SecurityDevelopment.Requests;
 using Secutrity;
 using Npgsql;
 using Microsoft.Extensions.Configuration;
+<<<<<<< HEAD
+using SecurityDevelopmentAddUsers;
+using SecurityDevelopment.Assemblies;
+using System.Reflection;
+using System.Runtime.Loader;
+using System.IO;
+
+=======
+>>>>>>> main
 
 namespace SecurityDevelopment.Repositories
 {
@@ -96,6 +105,49 @@ namespace SecurityDevelopment.Repositories
                 }
             }
         }
+<<<<<<< HEAD
+
+        public async Task AddUser(IReadOnlyList<UserRequest> item)
+        {
+            (string name, string password) account; 
+                
+            foreach (var p in item.ToList())
+            {
+                var context = new CustomAssemblyLoadContext();
+
+                context.Unloading += CustomAssemblyLoadContext.Context_Unloading;
+
+                var assemblyPath = Path.Combine(Directory.GetCurrentDirectory(), "SecurityDevelopmentAddUser.dll");
+
+                Assembly assembly = context.LoadFromAssemblyPath(assemblyPath);
+
+                var type = assembly.GetType("SecurityDevelopmentAddUser.Program");
+
+                var greetMethod = type.GetMethod("AddUser");
+
+                account = ((string name, string password))greetMethod.Invoke(new object[] { p.UserName }, new object[]{p.Password });
+
+                context.Unload();
+
+
+                string sqlDataSource = _configuration.GetConnectionString("SecurityDevelopmentCon");
+
+                using (NpgsqlConnection npgsqlConnection = new NpgsqlConnection(sqlDataSource))
+                {
+                    npgsqlConnection.Open();
+                    await _context.Users.AddAsync(new User() { UserName = account.name, Password = account.password, refreshToken = SecurityService.GenerateRefreshToken(account.name) });
+                    await _context.SaveChangesAsync();
+                }
+            }
+        }
+
+        public async void AddUsr(IReadOnlyList<UserRequest> item)
+        {
+            await AddUser(item);
+        }
+
+=======
+>>>>>>> main
         public async Task UpdateAsync(IReadOnlyList<UserRequest> item)
         {
             string sqlDataSource = _configuration.GetConnectionString("SecurityDevelopmentCon");

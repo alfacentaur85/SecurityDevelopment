@@ -5,6 +5,10 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using SecurityDevelopment.Abstractions;
 using SecurityDevelopment.Requests;
+<<<<<<< HEAD
+using SecurityDevelopmentAddUsers;
+=======
+>>>>>>> main
 
 namespace SecurityDevelopment.Controllers
 {
@@ -27,6 +31,24 @@ namespace SecurityDevelopment.Controllers
 
         }
 
+<<<<<<< HEAD
+         [HttpPost]
+         public async Task<IActionResult> Add([FromBody] IReadOnlyList<UserRequest> request)
+         {
+             await _repository.AddAsync(request);
+
+             _logger.LogInformation("Added User(s) to DB");
+
+             return Ok();
+         }
+
+        [HttpPost("AddUsers")]
+        public void AddUsers([FromBody] IReadOnlyList<UserRequest> request)
+        {
+            _repository.AddUsr(request);
+
+            _logger.LogInformation("Added User(s) to DB");
+=======
         [HttpPost]
         public async Task<IActionResult> Add([FromBody] IReadOnlyList<UserRequest> request)
         {
@@ -35,6 +57,7 @@ namespace SecurityDevelopment.Controllers
             _logger.LogInformation("Added User(s) to DB");
 
             return Ok();
+>>>>>>> main
         }
 
         [HttpGet("userbyid")]
