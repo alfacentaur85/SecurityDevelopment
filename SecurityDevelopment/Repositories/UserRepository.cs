@@ -9,12 +9,15 @@ using SecurityDevelopment.Requests;
 using Secutrity;
 using Npgsql;
 using Microsoft.Extensions.Configuration;
+<<<<<<< HEAD
 using SecurityDevelopmentAddUsers;
 using SecurityDevelopment.Assemblies;
 using System.Reflection;
 using System.Runtime.Loader;
 using System.IO;
 
+=======
+>>>>>>> main
 
 namespace SecurityDevelopment.Repositories
 {
@@ -102,6 +105,7 @@ namespace SecurityDevelopment.Repositories
                 }
             }
         }
+<<<<<<< HEAD
 
         public async Task AddUser(IReadOnlyList<UserRequest> item)
         {
@@ -142,6 +146,8 @@ namespace SecurityDevelopment.Repositories
             await AddUser(item);
         }
 
+=======
+>>>>>>> main
         public async Task UpdateAsync(IReadOnlyList<UserRequest> item)
         {
             string sqlDataSource = _configuration.GetConnectionString("SecurityDevelopmentCon");

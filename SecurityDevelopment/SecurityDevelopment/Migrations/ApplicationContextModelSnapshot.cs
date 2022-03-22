@@ -2,12 +2,9 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
-<<<<<<< HEAD
-=======
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using SecurityDevelopment;
->>>>>>> main
 
 namespace SecurityDevelopment.Migrations
 {
@@ -75,47 +72,6 @@ namespace SecurityDevelopment.Migrations
                     b.ToTable("Persons");
                 });
 
-            modelBuilder.Entity("Secutrity.RefreshToken", b =>
-                {
-                    b.Property<int>("id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .UseIdentityByDefaultColumn();
-
-                    b.Property<DateTime>("Expires")
-                        .HasColumnType("timestamp without time zone");
-
-                    b.Property<string>("Token")
-                        .HasColumnType("text");
-
-                    b.HasKey("id");
-
-                    b.ToTable("RefreshToken");
-                });
-
-            modelBuilder.Entity("Secutrity.User", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .UseIdentityByDefaultColumn();
-
-                    b.Property<string>("Password")
-                        .HasColumnType("text");
-
-                    b.Property<string>("UserName")
-                        .HasColumnType("text");
-
-                    b.Property<int?>("refreshTokenid")
-                        .HasColumnType("integer");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("refreshTokenid");
-
-                    b.ToTable("Users");
-                });
-
             modelBuilder.Entity("SecurityDevelopment.Models.DebetCard", b =>
                 {
                     b.HasOne("SecurityDevelopment.Models.Person", "Owner")
@@ -123,15 +79,6 @@ namespace SecurityDevelopment.Migrations
                         .HasForeignKey("OwnerId");
 
                     b.Navigation("Owner");
-                });
-
-            modelBuilder.Entity("Secutrity.User", b =>
-                {
-                    b.HasOne("Secutrity.RefreshToken", "refreshToken")
-                        .WithMany()
-                        .HasForeignKey("refreshTokenid");
-
-                    b.Navigation("refreshToken");
                 });
 #pragma warning restore 612, 618
         }
