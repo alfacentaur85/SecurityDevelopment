@@ -1,18 +1,10 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-<<<<<<< HEAD
-=======
 using SecurityDevelopment.Abstractions;
 using SecurityDevelopment.Repositories;
 using Microsoft.EntityFrameworkCore;
@@ -23,15 +15,21 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 
->>>>>>> lesson2
 
 namespace SecurityDevelopment
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
+        public Startup(Microsoft.AspNetCore.Hosting.IHostingEnvironment env)
         {
-            Configuration = configuration;
+
+            var builder = new ConfigurationBuilder()
+                .SetBasePath(env.ContentRootPath)
+                .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+                .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: false)
+                .AddEnvironmentVariables();
+
+            Configuration = builder.Build();
         }
 
         public IConfiguration Configuration { get; }
@@ -39,14 +37,6 @@ namespace SecurityDevelopment
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-<<<<<<< HEAD
-
-            services.AddControllers();
-            services.AddSwaggerGen(c =>
-            {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "SecurityDevelopment", Version = "v1" });
-            });
-=======
             var mapperConfiguration = new MapperConfiguration(mp => mp.AddProfile(new AppMappingProfile()));
             IMapper mapper = mapperConfiguration.CreateMapper();
             services.AddSingleton(mapper);
@@ -108,7 +98,6 @@ namespace SecurityDevelopment
             });
             services.AddAutoMapper(typeof(AppMappingProfile));
 
->>>>>>> lesson2
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -125,11 +114,8 @@ namespace SecurityDevelopment
 
             app.UseRouting();
 
-<<<<<<< HEAD
-=======
             app.UseAuthentication();
 
->>>>>>> lesson2
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>

@@ -1,9 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using System;
+﻿using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using SecurityDevelopment.Abstractions;
@@ -11,6 +7,7 @@ using SecurityDevelopment.Models;
 using SecurityDevelopment.DTO;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
+using SecurityDevelopment.Validators;
 
 namespace SecurityDevelopment.Controllers
 {
@@ -23,6 +20,7 @@ namespace SecurityDevelopment.Controllers
         private readonly IConfiguration _configuration;
         private readonly ILogger<DebetCardController> _logger;
         private readonly IMapper _mapper;
+        DebetCardValidator _validator;
 
         public DebetCardController(IConfiguration configuration, ILogger<DebetCardController> logger, IRepositoryDebetCard repository, IMapper mapper)
         {
@@ -30,6 +28,22 @@ namespace SecurityDevelopment.Controllers
             _logger = logger;
             _repository = repository;
             _mapper = mapper;
+            _validator = new DebetCardValidator();
+        }
+
+        private bool ValidateDebetCard(DebetCardDTO debetCardDTO)
+        {
+            var result = _validator.Validate(debetCardDTO);
+            if (result.IsValid)
+            {
+                return true;
+            }
+
+            foreach (var error in result.Errors)
+            {
+                _logger.LogError(error.ErrorMessage);
+            }
+            return false;
         }
 
         [HttpGet("All")]
@@ -59,6 +73,14 @@ namespace SecurityDevelopment.Controllers
         [HttpPost]
         public JsonResult Create([FromBody] IReadOnlyList<DebetCardDTO> cardsDTOList)
         {
+            foreach(var element in cardsDTOList)
+            {
+                if (!ValidateDebetCard(element))
+                {
+                    return null;
+                }
+            }
+           
             var models = _mapper.Map<IEnumerable<DebetCardDTO>, List<DebetCard>>(cardsDTOList);
             return _repository.Create(models);
         }
@@ -66,8 +88,17 @@ namespace SecurityDevelopment.Controllers
         [HttpPut]
         public JsonResult Update([FromBody] IReadOnlyList<DebetCardDTO> cardsDTOList)
         {
+            foreach (var element in cardsDTOList)
+            {
+                if (!ValidateDebetCard(element))
+                {
+                    return null;
+                }
+            }
+
             var models = _mapper.Map<IEnumerable<DebetCardDTO>, List<DebetCard>>(cardsDTOList);
             return _repository.Update(models);
         }
     }
+
 }
