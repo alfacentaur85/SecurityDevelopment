@@ -15,7 +15,5 @@ namespace SecurityDevelopment.Abstractions
         public JsonResult GetByAnyStringValue(string anyStringValue);
 
         public JsonResult DeleteById(int id);
-
-       
     }
 }

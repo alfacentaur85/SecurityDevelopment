@@ -13,6 +13,7 @@ namespace SecurityDevelopment.Mapper
 		public AppMappingProfile()
 		{
 			CreateMap<PersonDTO, Person>().ReverseMap();
+
 			CreateMap<DebetCardDTO, DebetCard>().ReverseMap();
 		}
 	}
