@@ -12,7 +12,9 @@ namespace SecurityDevelopment
     public class ApplicationContext : DbContext
     {
         public DbSet<User> Users { get; set; }
+
         public DbSet<Person> Persons { get; set; }
+
         public DbSet<DebetCard> DebetCards { get; set; }
 
         public ApplicationContext(DbContextOptions<ApplicationContext> options) : base(options)
@@ -22,7 +24,7 @@ namespace SecurityDevelopment
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            /*optionsBuilder.UseNpgsql("User ID=postgres;Password=postgres;Host=localhost;Port=5433;Database=SecurityDevelopment;");*/
+
         }
        
     }

@@ -17,6 +17,7 @@ namespace SecurityDevelopment.Repositories
     public class DebetCardRepository : IRepositoryDebetCard
     {
         private readonly IConfiguration _configuration;
+
         private readonly ILogger<DebetCardRepository> _logger;
 
         public DebetCardRepository(IConfiguration configuration, ILogger<DebetCardRepository> logger)
