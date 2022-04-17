@@ -50,6 +50,9 @@ namespace SecurityDevelopment.Repositories
                 npgsqlConnection.Close();
             }
 
+            var logMsg = JsonConvert.SerializeObject(persons);
+            _logger.LogInformation(logMsg);
+
             return new JsonResult("Entries have been added");
         }
 
@@ -78,6 +81,9 @@ namespace SecurityDevelopment.Repositories
                 }
                 npgsqlConnection.Close();
             }
+
+            var logMsg = JsonConvert.SerializeObject(persons);
+            _logger.LogInformation(logMsg);
 
             return new JsonResult("Entries have been updated");
         }
@@ -184,7 +190,5 @@ namespace SecurityDevelopment.Repositories
             var JSONresult = JsonConvert.SerializeObject(table);
             return new JsonResult(JSONresult);
         }
-
-
     }
 }
