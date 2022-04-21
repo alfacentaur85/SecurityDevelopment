@@ -17,6 +17,7 @@ namespace SecurityDevelopment.Repositories
     public class DebetCardRepository : IRepositoryDebetCard
     {
         private readonly IConfiguration _configuration;
+
         private readonly ILogger<DebetCardRepository> _logger;
 
         public DebetCardRepository(IConfiguration configuration, ILogger<DebetCardRepository> logger)
@@ -25,7 +26,7 @@ namespace SecurityDevelopment.Repositories
             _logger = logger;
         }
 
-        public JsonResult Create(IReadOnlyList<DebetCard> DebetCards)
+        public JsonResult Create(IReadOnlyList<DebetCard> debetCards)
         {
             string query = @"INSERT INTO ""DebetCards""(""Id"", ""Number"", ""CVC"", ""Balance"", ""DateFrom"", ""DateTo"", ""OwnerId"") VALUES(@Id, @Number, @CVC, @Balance, @DateFrom, @DateTo, @OwnerId)";
 
@@ -36,7 +37,7 @@ namespace SecurityDevelopment.Repositories
                 npgsqlConnection.Open();
                 using (NpgsqlCommand npgsqlCommand = new NpgsqlCommand(query, npgsqlConnection))
                 {
-                    foreach (var p in DebetCards)
+                    foreach (var p in debetCards)
                     {
                         npgsqlCommand.Parameters.Clear();
                         npgsqlCommand.Parameters.AddWithValue("Id", p.Id);
@@ -54,10 +55,13 @@ namespace SecurityDevelopment.Repositories
                 npgsqlConnection.Close();
             }
 
+            var logMsg = JsonConvert.SerializeObject(debetCards);
+            _logger.LogInformation(logMsg);
+
             return new JsonResult("Entries have been added");
         }
 
-        public JsonResult Update(IReadOnlyList<DebetCard> DebetCards)
+        public JsonResult Update(IReadOnlyList<DebetCard> debetCards)
         {
             string query = @"UPDATE ""DebetCards"" SET ""Number""=@Number, ""CVC""=@CVC, ""Balance""=@Balance,  ""DateFrom""=@DateFrom, ""DateTo""=@DateTo, ""OwnerId""=@OwnerId ""Id""=@Id";
 
@@ -68,7 +72,7 @@ namespace SecurityDevelopment.Repositories
                 npgsqlConnection.Open();
                 using (NpgsqlCommand npgsqlCommand = new NpgsqlCommand(query, npgsqlConnection))
                 {
-                    foreach (var p in DebetCards)
+                    foreach (var p in debetCards)
                     {
                         npgsqlCommand.Parameters.Clear();
                         npgsqlCommand.Parameters.AddWithValue("Id", p.Id);
@@ -85,6 +89,9 @@ namespace SecurityDevelopment.Repositories
                 }
                 npgsqlConnection.Close();
             }
+
+            var logMsg = JsonConvert.SerializeObject(debetCards);
+            _logger.LogInformation(logMsg);
 
             return new JsonResult("Entries have been updated");
         }

@@ -1,9 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using System;
+﻿using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using SecurityDevelopment.Abstractions;
@@ -11,6 +7,8 @@ using SecurityDevelopment.Models;
 using SecurityDevelopment.DTO;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
+using SecurityDevelopment.Validators;
+
 
 namespace SecurityDevelopment.Controllers
 {
@@ -23,6 +21,7 @@ namespace SecurityDevelopment.Controllers
         private readonly IConfiguration _configuration;
         private readonly ILogger<PersonController> _logger;
         private readonly IMapper _mapper;
+        PersonValidator _validator;
 
         public PersonController(IConfiguration configuration, ILogger<PersonController> logger, IRepositoryPerson repository, IMapper mapper)
         {
@@ -30,6 +29,22 @@ namespace SecurityDevelopment.Controllers
             _logger = logger;
             _repository = repository;
             _mapper = mapper;
+            _validator = new PersonValidator();
+        }
+
+        private bool ValidatePerson(PersonDTO personDTO)
+        {
+            var result = _validator.Validate(personDTO);
+            if (result.IsValid)
+            {
+                return true;
+            }
+
+            foreach (var error in result.Errors)
+            {
+                _logger.LogError(error.ErrorMessage);
+            }
+            return false;
         }
 
         [HttpGet("All")]
@@ -59,6 +74,14 @@ namespace SecurityDevelopment.Controllers
         [HttpPost]
         public JsonResult Create([FromBody] IReadOnlyList<PersonDTO> personDTOList)
         {
+            foreach (var element in personDTOList)
+            {
+                if (!ValidatePerson(element))
+                {
+                    return null;
+                }
+            }
+
             var models = _mapper.Map<IEnumerable<PersonDTO>, List<Person>>(personDTOList);
             return _repository.Create(models);        
         }
@@ -66,6 +89,14 @@ namespace SecurityDevelopment.Controllers
         [HttpPut]
         public JsonResult Update([FromBody] IReadOnlyList<PersonDTO> personDTOList)
         {
+            foreach (var element in personDTOList)
+            {
+                if (!ValidatePerson(element))
+                {
+                    return null;
+                }
+            }
+
             var models = _mapper.Map<IEnumerable<PersonDTO>, List<Person>>(personDTOList);
             return _repository.Update(models);
         }

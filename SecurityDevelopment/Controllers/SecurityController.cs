@@ -28,7 +28,6 @@ namespace SecurityDevelopment.Controllers
             _logger = logger;
 
             _repository = repository;
-
         }
 
         [AllowAnonymous]
